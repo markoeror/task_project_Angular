@@ -1,4 +1,4 @@
-﻿<div class="col-md-6 offset-md-3 mt-5">
+﻿<div class="col-md-6 offset-md-3 mt-5" *ngIf="toShowSignin">
   <div class="card">
     <h4 class="card-header">Task Project App By Marko Eror</h4>
     <div class="card-body">
@@ -9,10 +9,17 @@
             type="text"
             formControlName="username"
             class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
+            [ngClass]="{
+              'is-invalid': logInsubmitted && loginF.username.errors
+            }"
           />
-          <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-            <div *ngIf="f.username.errors.required">Username is required</div>
+          <div
+            *ngIf="logInsubmitted && loginF.username.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="loginF.username.errors.required">
+              Username is required
+            </div>
           </div>
         </div>
         <div class="form-group">
@@ -21,13 +28,25 @@
             type="password"
             formControlName="password"
             class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+            [ngClass]="{
+              'is-invalid': logInsubmitted && loginF.password.errors
+            }"
           />
-          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-            <div *ngIf="f.password.errors.required">Password is required</div>
+          <div
+            *ngIf="logInsubmitted && loginF.password.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="loginF.password.errors.required">
+              Password is required
+            </div>
           </div>
         </div>
-        <button [disabled]="loading" class="btn btn-primary" (click)="login()">
+        <button
+          [disabled]="loading"
+          class="btn btn-primary"
+          (click)="login()"
+          style="margin-right: 15px;"
+        >
           <span
             *ngIf="loading"
             class="spinner-border spinner-border-sm mr-1"
@@ -37,12 +56,24 @@
         <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
           {{ error }}
         </div>
+
+        <button
+          [disabled]="loading"
+          class="btn btn-primary"
+          (click)="showSignin()"
+        >
+          <span
+            *ngIf="Show; signIn"
+            class="spinner-border spinner-border-sm mr-1"
+          ></span>
+          Show Signin
+        </button>
       </form>
     </div>
   </div>
 </div>
 
-<div class="col-md-6 offset-md-3 mt-5">
+<div class="col-md-6 offset-md-3 mt-5" *ngIf="!toShowSignin">
   <div class="card">
     <h4 class="card-header">Task Project App By Marko Eror</h4>
     <div class="card-body">
@@ -53,10 +84,17 @@
             type="text"
             formControlName="username"
             class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
+            [ngClass]="{
+              'is-invalid': signInsubmitted && signinF.username.errors
+            }"
           />
-          <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-            <div *ngIf="f.username.errors.required">Username is required</div>
+          <div
+            *ngIf="signInsubmitted && signinF.username.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="signinF.username.errors.required">
+              Username is required
+            </div>
           </div>
         </div>
         <div class="form-group">
@@ -65,54 +103,94 @@
             type="password"
             formControlName="password"
             class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+            [ngClass]="{
+              'is-invalid': signInsubmitted && signinF.password.errors
+            }"
           />
-          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-            <div *ngIf="f.password.errors.required">Password is required</div>
+          <div
+            *ngIf="signInsubmitted && signinF.password.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="signinF.password.errors.required">
+              Password is required
+            </div>
           </div>
         </div>
         <div class="form-group">
-          <label for="username">Username</label>
+          <label for="name">Name</label>
           <input
             type="text"
             formControlName="name"
             class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+            [ngClass]="{ 'is-invalid': signInsubmitted && signinF.name.errors }"
           />
-          <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
-            <div *ngIf="f.name.errors.required">Name is required</div>
+          <div
+            *ngIf="signInsubmitted && signinF.name.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="signinF.name.errors.required">Name is required</div>
           </div>
         </div>
         <div class="form-group">
-          <label for="surname">Username</label>
+          <label for="surname">Surname</label>
           <input
             type="text"
             formControlName="surname"
             class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.surname.errors }"
+            [ngClass]="{
+              'is-invalid': signInsubmitted && signinF.surname.errors
+            }"
           />
-          <div *ngIf="submitted && f.surname.errors" class="invalid-feedback">
-            <div *ngIf="f.surname.errors.required">Surname is required</div>
+          <div
+            *ngIf="signInsubmitted && signinF.surname.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="signinF.surname.errors.required">
+              Surname is required
+            </div>
           </div>
         </div>
         <div class="form-group">
-          <label for="surname">email</label>
+          <label for="email">Email</label>
           <input
             type="text"
             formControlName="email"
             class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+            [ngClass]="{
+              'is-invalid': signInsubmitted && signinF.email.errors
+            }"
           />
-          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-            <div *ngIf="f.email.errors.required">Email is required</div>
+          <div
+            *ngIf="signInsubmitted && signinF.email.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="signinF.email.errors.required">
+              Email is required
+            </div>
           </div>
         </div>
-        <button [disabled]="loading" class="btn btn-primary" (click)="Signin()">
+        <button
+          [disabled]="loading"
+          class="btn btn-primary"
+          (click)="signin()"
+          style="margin-right: 15px;"
+        >
           <span
             *ngIf="loading"
             class="spinner-border spinner-border-sm mr-1"
           ></span>
           Signin
+        </button>
+        <button
+          [disabled]="loading"
+          class="btn btn-primary"
+          (click)="showSignin()"
+        >
+          <span
+            *ngIf="Show; signIn"
+            class="spinner-border spinner-border-sm mr-1"
+          ></span>
+          Show Login
         </button>
         <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
           {{ error }}
