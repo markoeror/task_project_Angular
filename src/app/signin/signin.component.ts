@@ -53,10 +53,15 @@ export class SigninComponent implements OnInit {
     if (this.signInForm.invalid) {
       return;
     }
-
     this.loading = true;
     this.authenticationService
-      .login(this.f.username.value, this.f.password.value)
+      .signin(
+        this.f.username.value,
+        this.f.password.value,
+        this.f.name.value,
+        this.f.surname.value,
+        this.f.email.value
+      )
       .pipe(first())
       .subscribe(
         data => {

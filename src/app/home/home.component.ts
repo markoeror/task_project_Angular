@@ -1,21 +1,20 @@
-﻿import { Component } from '@angular/core';
-import { first } from 'rxjs/operators';
+﻿import { Component } from "@angular/core";
+import { first } from "rxjs/operators";
 
-import { User } from '@app/_models';
-import { UserService, AuthenticationService } from '@app/_services';
+import { User } from "@app/_models";
+import { UserService, AuthenticationService } from "@app/_services";
 
-@Component({ templateUrl: 'home.component.html' })
+@Component({ templateUrl: "home.component.html" })
 export class HomeComponent {
-    loading = false;
-    users: User[];
+  public loading = false;
+  public username = "";
 
-    constructor(private userService: UserService) { }
+  constructor(private userService: UserService) {}
 
-    ngOnInit() {
-        this.loading = true;
-        this.userService.getAll().pipe(first()).subscribe(users => {
-            this.loading = false;
-            this.users = users;
-        });
-    }
+  ngOnInit() {
+    this.loading = true;
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    this.username = currentUser.username;
+    this.loading = false;
+  }
 }

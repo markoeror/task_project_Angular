@@ -89,7 +89,6 @@ export class AuthorisationInterceptor implements HttpInterceptor {
       const tokenType = currentUser.tokenType;
       const token = currentUser.token;
       return headers.get("Authorization") === tokenType + " " + token;
-
       // return true;
     }
   }

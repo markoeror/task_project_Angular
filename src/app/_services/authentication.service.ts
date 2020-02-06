@@ -24,7 +24,7 @@ export class AuthenticationService {
 
   login(username: string, password: string) {
     return this.http
-      .post<any>(`${environment.apiUrl}/api/auth/login`, {
+      .post<any>(`${environment.apiUrl}/api/auth/signin`, {
         username: username,
         password: password
       })
@@ -48,28 +48,29 @@ export class AuthenticationService {
       );
   }
 
-  signin(username: string, password: string) {
+  signin(
+    username: string,
+    password: string,
+    name: string,
+    surname: string,
+    email: string
+  ) {
+    const user = {
+      name: name,
+      surname: surname,
+      username: username,
+      email: email,
+      password: password
+    };
+    console.log("user", user);
+
     return this.http
-      .post<any>(`${environment.apiUrl}/api/auth/signin`, {
-        username: username,
-        password: password
-      })
+      .post<any>(`${environment.apiUrl}/api/auth/signup`, user)
       .pipe(
         map(userFromApi => {
-          const user: User = {
-            id: -1,
-            username: userFromApi.username,
-            password: "",
-            firstName: "",
-            lastName: "",
-            token: userFromApi.accessToken,
-            authorities: userFromApi.authorities,
-            tokenType: userFromApi.tokenType
-          };
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem("currentUser", JSON.stringify(user));
-          this.currentUserSubject.next(user);
-          return user;
+          console.log("???", userFromApi);
+
+          return userFromApi;
         })
       );
   }
