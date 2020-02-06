@@ -2,6 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 // used to create fake backend
 import { authorisationProvider } from './_helpers';
@@ -16,8 +17,9 @@ import { SigninComponent } from './signin/signin.component';
 import { TableComponent } from './components/components/table/table.component';
 import { TestComponent } from './components/test/test.component';
 import { ModalDialogComponent } from './components/components/modal-dialog/modal-dialog.component';
-
+import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   imports: [
@@ -25,16 +27,19 @@ import { TableModule } from 'primeng/table';
     ReactiveFormsModule,
     HttpClientModule,
     appRoutingModule,
-    TableModule
+    TableModule,
+    DropdownModule,
+    ButtonModule,
+    FormsModule
   ],
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
     SigninComponent,
-    TableComponent,
     TestComponent,
-    ModalDialogComponent
+    ModalDialogComponent,
+    TableComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
