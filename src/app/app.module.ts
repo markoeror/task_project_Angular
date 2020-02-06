@@ -15,6 +15,7 @@ import { LoginComponent } from './login';
 import { SigninComponent } from './signin/signin.component';
 import { TableComponent } from './components/components/table/table.component';
 import { TestComponent } from './components/test/test.component';
+import { ModalDialogComponent } from './components/components/modal-dialog/modal-dialog.component';
 
 import { TableModule } from 'primeng/table';
 
@@ -32,7 +33,8 @@ import { TableModule } from 'primeng/table';
     LoginComponent,
     SigninComponent,
     TableComponent,
-    TestComponent
+    TestComponent,
+    ModalDialogComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

@@ -1,0 +1,119 @@
+.custom-modal {
+  bottom: 0px;
+  left: 0;
+  top: 10%;
+  width: 100%;
+  position: absolute;
+  z-index: 900;
+
+  &__footer {
+    display: flex;
+    align-self: flex-end;
+    justify-content: flex-end;
+    border-top: 1px solid #e5e5e5;
+    padding: 15px;
+    min-height: 100%;
+    min-width: 100%;
+    margin-top: auto;
+
+    &-template {
+      display: flex;
+      border-top: 1px solid #e5e5e5;
+      padding: 15px;
+      min-height: 100%;
+      min-width: 100%;
+      margin-top: auto;
+    }
+  }
+  &__footer-blue {
+    display: flex;
+    align-self: flex-end;
+    justify-content: flex-end;
+    border-top: 1px solid #e5e5e5;
+    padding: 10px;
+    min-height: 100%;
+    min-width: 100%;
+    background: #12357d;
+    color: #fff;
+  }
+  &__note-form {
+    display: flex;
+    align-self: flex-end;
+    min-height: 100%;
+    max-width: 60%;
+    margin-top: auto;
+  }
+  &__content {
+    display: flex;
+    flex-direction: column;
+    z-index: 950;
+    position: relative;
+    background: #ffff;
+    border-radius: 3px;
+    min-height: 500px;
+    width: 80%;
+    max-width: 100%;
+    margin: 0 auto;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  }
+
+  &--header {
+    position: relative;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-bottom: 1px solid #e5e5e5;
+
+    &-close {
+      display: inline-block;
+      position: absolute;
+      top: 11px;
+      right: 14px;
+      font-size: 19.5px;
+      font-weight: 700;
+      line-height: 1;
+      color: #000;
+      text-shadow: 0 1px 0 #fff;
+      cursor: pointer;
+    }
+  }
+  &--header-blue {
+    position: relative;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-bottom: 1px solid #e5e5e5;
+    background: #12357d;
+    color: #fff;
+
+    &-close {
+      display: inline-block;
+      position: absolute;
+      top: 11px;
+      right: 14px;
+      font-size: 19.5px;
+      font-weight: 700;
+      line-height: 1;
+      color: #000;
+      text-shadow: 0 1px 0 #fff;
+      opacity: 0.2;
+      cursor: pointer;
+    }
+  }
+}
+.backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 920;
+  background-color: rgba(0, 0, 0, 0.5);
+  min-height: 100vh;
+  min-width: 100vw;
+}
+.form-note-template {
+  min-width: 100%;
+  padding: 10px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+}

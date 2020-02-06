@@ -1,0 +1,55 @@
+<ng-container *ngIf="visible">
+  <div class="custom-modal" *ngIf="visible">
+    <div class="custom-modal__content" [@slideInOut] [style.width]="width">
+      <div class="custom-modal--header">
+        <span *ngIf="isHeaderVisible && !headerTemplate">{{
+          headerTitle
+        }}</span>
+        <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
+        <div class="custom-modal--header-close" (click)="closeModal()">
+            <span class="fas fa-times"></span>
+        </div>
+      </div>
+      <div
+        *ngIf="visible"
+        [style.height]="height"
+        style="max-height:565px;overflow-y:auto; margin:0 10px"
+      >
+        <ng-content *ngIf="visible"></ng-content>
+      </div>
+      <div class="form-note-template" *ngIf="noteTemplate">
+          <ng-content select="note-template"></ng-content>
+      </div>
+      <div
+        [ngClass]="
+          footerTemplate
+            ? 'custom-modal__footer-template'
+            : 'custom-modal__footer'
+        "
+        *ngIf="isFooterVisible"
+      >
+        <div *ngIf="!footerTemplate" style="display: flex">
+          <button
+            pButton
+            type="button"
+            style="height: 25px !important;margin-right: 10px;border-radius: 5px;"
+            [label]="labelClose"
+            class="ui-button-secondary"
+            [disabled]="isCloseButtonDisabled"
+            (click)="onCloseButtonAction()"
+          ></button>
+          <button
+            pButton
+            type="button"
+            style="height: 25px !important;margin-right: 10px;border-radius: 5px;"
+            [disabled]="isSaveButtonDisabled"
+            [label]="labelSave"
+            (click)="onSaveButtonAction()"
+          ></button>
+        </div>
+        <ng-container *ngTemplateOutlet="footerTemplate"></ng-container>
+      </div>
+    </div>
+    <div class="backdrop"></div>
+  </div>
+</ng-container>
