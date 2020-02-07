@@ -6,8 +6,14 @@ import { UserService, AuthenticationService } from '@app/_services';
 import { environment } from '@environments/environment';
 import { Subject } from 'rxjs';
 import { Store } from '@app/store/store';
-@Component({ templateUrl: 'home.component.html' })
+import { FormGroup, Validators, FormControl } from '@angular/forms';
+@Component({
+  templateUrl: 'home.component.html',
+  styleUrls: ['./home.component.scss']
+})
 export class HomeComponent implements OnInit, OnDestroy {
+  public projectForm: FormGroup;
+  public taskForm: FormGroup;
   public tasks;
   public projects;
   public users;
@@ -15,6 +21,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public tasksStatus;
   public loading = false;
   public username = '';
+  public isAdmin = false;
   public $vm = this.facade.$vm;
   private $destroy = new Subject();
   public showProjectPopUp = false;
@@ -27,7 +34,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loading = true;
-
+    this.setProjectForm();
+    this.setTaskForm();
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     const authorisation = currentUser.authorities[0].authority;
     this.username = currentUser.username;
@@ -35,21 +43,37 @@ export class HomeComponent implements OnInit, OnDestroy {
       .pipe(skip(2), distinctUntilChanged(), takeUntil(this.$destroy))
       .subscribe({
         next: data => {
+          this.projects = data.projects;
           this.showPopUp = data.showPopUp;
+          console.log('this.projects', this.projects);
         }
       });
 
     this.getTasks(currentUser);
     if (authorisation === 'ROLE_ADMIN') {
+      this.isAdmin = true;
       this.facade.getProjects();
       this.facade.getUsers();
     } else {
+      this.isAdmin = false;
       this.facade.getUsers();
     }
     this.username = currentUser.username;
     this.loading = false;
   }
-
+  setProjectForm() {
+    this.projectForm = new FormGroup({
+      projectName: new FormControl('')
+    });
+  }
+  setTaskForm() {
+    this.taskForm = new FormGroup({
+      shortname: new FormControl('', Validators.required),
+      description: new FormControl('', Validators.required),
+      deadline: new FormControl('', Validators.required),
+      project: new FormControl('', Validators.required)
+    });
+  }
   getTasks(user) {
     this.facade.getTasks(user);
   }
@@ -63,7 +87,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   createProject(data) {
-    this.facade.createProject(data);
+    const projectName = this.projectForm.value['projectName'];
+    this.facade.createProject(projectName);
   }
 
   ngOnDestroy() {

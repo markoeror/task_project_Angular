@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 @Component({
   selector: 'app-table',
   templateUrl: 'table.component.html',
-  styleUrls: ['./table.component.less']
+  styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnInit, OnDestroy {
   constructor(private facade: TaskFacade) {}
@@ -38,10 +38,12 @@ export class TableComponent implements OnInit, OnDestroy {
               value: user.username
             });
           });
+          console.log('data.projects', data.projects);
+
           data.projects.map(project => {
             this.projects.push({
-              label: project.username,
-              value: project.username
+              label: project.projectName,
+              value: project.projectName
             });
           });
         }

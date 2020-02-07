@@ -28,7 +28,7 @@ export class ModalDialogComponent implements OnDestroy, OnInit {
   @Output() saveButtonAction: EventEmitter<any> = new EventEmitter();
   @Output() closeButtonAction: EventEmitter<any> = new EventEmitter();
   @Output() visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Input() headerTitle = 'This is header title';
+  @Input() headerTitle = 'Create Tasks and Projects';
   @Input() noteTemplate = false;
   @Input() headerTemplate;
   @Input() footerTemplate;

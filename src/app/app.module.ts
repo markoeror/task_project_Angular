@@ -20,7 +20,7 @@ import { ModalDialogComponent } from './components/components/modal-dialog/modal
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
-
+import { CalendarModule } from 'primeng/calendar';
 @NgModule({
   imports: [
     BrowserModule,
@@ -31,7 +31,8 @@ import { DropdownModule } from 'primeng/dropdown';
     DropdownModule,
     ButtonModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    CalendarModule
   ],
   declarations: [
     AppComponent,

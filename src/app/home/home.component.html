@@ -3,6 +3,7 @@
   <div class="card-body">
     <h6>
       <button
+        *ngIf="isAdmin"
         label="Create Projects/Tasks"
         pButton
         type="button"
@@ -18,4 +19,67 @@
   </div>
 </div>
 
-<app-modal-dialog [visible]="showPopUp"></app-modal-dialog>
+<app-modal-dialog [visible]="showPopUp" [width]="'40%'">
+  <div class="ui-g ui-fluid">
+    <div
+      class=""
+      style="border: 1px solid black;padding: 20px;border-radius: 10px;"
+    >
+      <form [formGroup]="projectForm">
+        <h2>Create Project</h2>
+        <div class="ui-inputgroup">
+          <input
+            type="text"
+            pInputText
+            placeholder="Project name"
+            formControlName="projectName"
+            style="margin-right: 15px;"
+          />
+          <button
+            pButton
+            type="button"
+            label="Create Project"
+            (click)="createProject(row)"
+          ></button>
+        </div>
+      </form>
+    </div>
+    <div
+      class=""
+      style="border: 1px solid black;padding: 20px;border-radius: 10px;margin-top: 20px;"
+    >
+      <form [formGroup]="taskForm">
+        <h2>Create Task and add it to Project</h2>
+        <div class="ui-inputgroup">
+          <input
+            type="text"
+            pInputText
+            placeholder="Task name"
+            formControlName="shortname"
+            style="margin-right: 15px;"
+          />
+        </div>
+        <div class="ui-inputgroup">
+          <input
+            type="text"
+            pInputText
+            placeholder="Description"
+            formControlName="description"
+            style="margin-right: 15px;width: 250px;"
+          />
+        </div>
+        <div class="ui-inputgroup">
+          <p-dropdown
+            [options]="projects"
+            formControlName="project"
+            [style]="{ width: '160px' }"
+            optionLabel="projectName"
+          ></p-dropdown>
+        </div>
+        <div class="ui-inputgroup">
+          <p-calendar formControlName="deadline"></p-calendar>
+        </div>
+      </form>
+    </div>
+  </div>
+</app-modal-dialog>

@@ -84,7 +84,14 @@ export class TaskFacade {
   }
 
   createProject(data: any) {
-    this.taskService.createProject(data);
+    this.taskService.createProject(data).subscribe({
+      next: dataFromApi => {
+        console.log('getUsersdataFromApi', dataFromApi);
+        this.store.set('projects', dataFromApi);
+        this.store.set('isLoading', false);
+      },
+      error: () => this.store.set('isLoading', false)
+    });
   }
   getUsers() {
     this.taskService.getUsers().subscribe({
