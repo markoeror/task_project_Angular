@@ -1,54 +1,70 @@
 import { Injectable } from '@angular/core';
+
 import { environment } from '@environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { EmployeeMappingStore } from '../store/store';
+import { Store } from '../store/store';
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
-  constructor(private http: HttpClient, private store: EmployeeMappingStore) {
-  }
+  constructor(private http: HttpClient, private store: Store) {}
 
+  public currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-  setTask(username: any) {
-    const data = {
-      username
-    };
+  setTask(data: any) {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     const authorisation = currentUser.authorities[0].authority;
     let address = '';
     if (authorisation === 'ROLE_ADMIN') {
-      address = (`${environment.apiUrl}/api/user/updateTaskAdmin`);
+      address = `${environment.apiUrl}/api/user/updateTaskAdmin`;
     } else {
-      address = (`${environment.apiUrl}/api/user/updateTaskUser`);
+      address = `${environment.apiUrl}/api/user/updateTaskUser`;
     }
-    return this.http.post(address, data).pipe(map(jsonData =>
-      this.store.set('tasks', jsonData)
-    ))
-      ;
+    return this.http.post(address, data).pipe(map(jsonData => jsonData));
   }
 
   getProjects() {
-    const address = (`${environment.apiUrl}/api/user/projects`);
-    return this.http.get(address).pipe(map(jsonData =>
-      this.store.set('projects', jsonData)
-    ));
+    const address = `${environment.apiUrl}/api/user/projects`;
+    return this.http.get(address).pipe(map(jsonData => jsonData));
+  }
+
+  getUsers() {
+    const address = `${environment.apiUrl}/api/user/getAllUsers`;
+    return this.http.get(address).pipe(map(jsonData => jsonData));
   }
 
   deleteTask(id) {
-    const address = (`${environment.apiUrl}/api/user/deleteTask${id}`);
-    return this.http.get(address).pipe(map(jsonData =>
-      this.store.set('tasks', jsonData)
-    ));
+    const address = `${environment.apiUrl}/api/user/deleteTask${id}`;
+    return this.http.get(address).pipe(map(jsonData => jsonData));
   }
 
   createProject(data) {
     const project = {
       data
     };
-    const address = (`${environment.apiUrl}/api/user/admin/project`);
-    return this.http.post(address, project).pipe(map(jsonData =>
-      this.store.set('projects', jsonData)
-    ));
+    const address = `${environment.apiUrl}/api/user/admin/project`;
+    return this.http
+      .post(address, project)
+      .pipe(map(jsonData => this.store.set('projects', jsonData)));
+  }
+
+  getTasks(user) {
+    this.store.set('isLoading', true);
+    const body = { user: user };
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const authorisation = currentUser.authorities[0].authority;
+    let address = '';
+    if (authorisation === 'ROLE_ADMIN') {
+      address = `${environment.apiUrl}/api/user/tasksAdmin`;
+      console.log(address);
+    } else {
+      address = `${environment.apiUrl}/api/user/tasksUser`;
+    }
+    return this.http.post(address, body).pipe(map(jsonData => jsonData));
+  }
+
+  createTask(task: any, projectId: any) {
+    const address = `${environment.apiUrl}/api/user/createTaskAndAddToProject/${projectId}`;
+    return this.http.post(address, task).pipe(map(jsonData => jsonData));
   }
 }

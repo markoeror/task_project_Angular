@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // used to create fake backend
 import { authorisationProvider } from './_helpers';
 
@@ -30,7 +30,8 @@ import { DropdownModule } from 'primeng/dropdown';
     TableModule,
     DropdownModule,
     ButtonModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule
   ],
   declarations: [
     AppComponent,

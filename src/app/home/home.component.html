@@ -2,7 +2,17 @@
   <h4 class="card-header">You're logged in as {{ username }}</h4>
   <div class="card-body">
     <h6>Tasks for {{ username }}</h6>
+    <div style="margin: solid 1px black;">
+      <app-table
+        [columns]="tableColumns"
+        [tasksStatus]="tasksStatus"
+        [tasks]="tasks"
+        [projects]="projects"
+        [listOfUsers]="users"
+      >
+      </app-table>
+    </div>
+
     <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
-    <ul *ngIf="users"></ul>
   </div>
 </div>

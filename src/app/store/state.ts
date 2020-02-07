@@ -12,11 +12,12 @@ export interface Task {
 export interface State {
   user: {};
   isLoading: boolean;
-  projects: Array<Task>;
-  tasks: Array<any>;
+  projects: Array<any>;
+  tasks: Array<Task>;
   tableColumns: Array<any>;
   tasksStatus: Array<any>;
   listOfUsers: Array<any>;
+  showPopUp: boolean;
 }
 
 export class AppState implements State {
@@ -24,6 +25,7 @@ export class AppState implements State {
     localStorage.getItem('currentUser') != null
       ? JSON.parse(localStorage.getItem('currentUser'))
       : {};
+  showPopUp = false;
   isLoading = false;
   projects = [];
   tasks = [];
