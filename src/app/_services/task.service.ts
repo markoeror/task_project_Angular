@@ -33,8 +33,9 @@ export class TaskService {
     return this.http.get(address).pipe(map(jsonData => jsonData));
   }
 
-  deleteTask(id) {
-    const address = `${environment.apiUrl}/api/user/deleteTask${id}`;
+  deleteTask(task) {
+    const id = task.id;
+    const address = `${environment.apiUrl}/api/user/deleteTask/${id}`;
     return this.http.get(address).pipe(map(jsonData => jsonData));
   }
 
@@ -49,8 +50,10 @@ export class TaskService {
   }
 
   getTasks(user) {
+    console.log('user', user);
+
     this.store.set('isLoading', true);
-    const body = { user: user };
+    const body = { username: user.username };
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     const authorisation = currentUser.authorities[0].authority;
     let address = '';

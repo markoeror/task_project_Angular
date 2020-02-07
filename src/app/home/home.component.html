@@ -1,18 +1,21 @@
 ﻿<div class="card mt-4">
   <h4 class="card-header">You're logged in as {{ username }}</h4>
   <div class="card-body">
-    <h6>Tasks for {{ username }}</h6>
+    <h6>
+      <button
+        label="Create Projects/Tasks"
+        pButton
+        type="button"
+        class="ui-button-info"
+        (click)="createProjectTaskPopUp()"
+      ></button>
+    </h6>
     <div style="margin: solid 1px black;">
-      <app-table
-        [columns]="tableColumns"
-        [tasksStatus]="tasksStatus"
-        [tasks]="tasks"
-        [projects]="projects"
-        [listOfUsers]="users"
-      >
-      </app-table>
+      <app-table> </app-table>
     </div>
 
     <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
   </div>
 </div>
+
+<app-modal-dialog [visible]="showPopUp"></app-modal-dialog>

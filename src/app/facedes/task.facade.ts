@@ -11,11 +11,28 @@ export class TaskFacade {
     this.store.select('projects'),
     this.store.select('listOfUsers'),
     this.store.select('tableColumns'),
-    this.store.select('tasksStatus')
+    this.store.select('tasksStatus'),
+    this.store.select('showPopUp')
   ).pipe(
-    map(([tasks, projects, listOfUsers, tableColumns, tasksStatus]) => {
-      return { tasks, projects, listOfUsers, tableColumns, tasksStatus };
-    })
+    map(
+      ([
+        tasks,
+        projects,
+        listOfUsers,
+        tableColumns,
+        tasksStatus,
+        showPopUp
+      ]) => {
+        return {
+          tasks,
+          projects,
+          listOfUsers,
+          tableColumns,
+          tasksStatus,
+          showPopUp
+        };
+      }
+    )
   );
 
   constructor(private taskService: TaskService, private store: Store) {}

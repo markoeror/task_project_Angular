@@ -3,13 +3,13 @@
     <p-table [value]="tasks" dataKey="id" editMode="row">
       <ng-template pTemplate="header" let-columns>
         <tr>
-          <th style="width: 50px;">
+          <th style="width: 60px;">
             Task Id
           </th>
-          <th style="width: 150px;">
+          <th style="width: 100px;">
             Task name
           </th>
-          <th style="width: 150px;">
+          <th style="width: 100px;">
             Deadline
           </th>
           <th style="width: 150px;">
@@ -24,10 +24,10 @@
           <th style="width: 150px;">
             Assigned to
           </th>
-          <th>
-            Task status
+          <th style="width: 90px;">
+            Edit task
           </th>
-          <th *ngIf="!rolePermissionAdmin">
+          <th *ngIf="rolePermissionAdmin" style="width: 60px;">
             Delete task
           </th>
         </tr>
@@ -61,7 +61,7 @@
             {{ rowData.shortname }}
           </td>
 
-          <td>
+          <td *ngIf="rolePermissionAdmin">
             <p-cellEditor>
               <ng-template pTemplate="input">
                 <input pInputText type="text" [(ngModel)]="rowData.deadline" />
@@ -70,6 +70,9 @@
                 {{ rowData.deadline }}
               </ng-template>
             </p-cellEditor>
+          </td>
+          <td *ngIf="!rolePermissionAdmin">
+            {{ rowData.deadline }}
           </td>
           <td>
             <p-cellEditor>
@@ -91,7 +94,7 @@
                 <p-dropdown
                   [options]="tasksStatus"
                   [(ngModel)]="rowData.taskStatus"
-                  [style]="{ width: '80px' }"
+                  [style]="{ width: '40%' }"
                 ></p-dropdown>
               </ng-template>
               <ng-template pTemplate="output">
@@ -99,27 +102,33 @@
               </ng-template>
             </p-cellEditor>
           </td>
-          <td>
+          <td *ngIf="rolePermissionAdmin">
             <p-cellEditor>
               <ng-template pTemplate="input">
-                <input
-                  pInputText
-                  type="text"
+                <p-dropdown
+                  [options]="projects"
                   [(ngModel)]="rowData.projectName"
-                />
+                  [style]="{ width: '40%' }"
+                ></p-dropdown>
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{ rowData.projectName }}
               </ng-template>
               <ng-template pTemplate="output">
                 {{ rowData.projectName }}
               </ng-template>
             </p-cellEditor>
           </td>
+          <td *ngIf="!rolePermissionAdmin">
+            {{ rowData.usersName }}
+          </td>
           <td *ngIf="rolePermissionAdmin">
             <p-cellEditor>
               <ng-template pTemplate="input">
                 <p-dropdown
-                  [options]="tasksStatus"
-                  [(ngModel)]="listOfUsers.usersName"
-                  [style]="{ width: '60%' }"
+                  [options]="users"
+                  [(ngModel)]="rowData.usersName"
+                  [style]="{ width: '15px' }"
                 ></p-dropdown>
               </ng-template>
               <ng-template pTemplate="output">
@@ -163,7 +172,7 @@
               (click)="onRowEditCancel(rowData, ri)"
             ></button>
           </td>
-          <td *ngIf="!rolePermissionAdmin" style="text-align:center">
+          <td *ngIf="rolePermissionAdmin" style="text-align:center">
             <button
               pButton
               type="button"

@@ -5,7 +5,7 @@ import { User } from '@app/_models';
 import { UserService, AuthenticationService } from '@app/_services';
 import { environment } from '@environments/environment';
 import { Subject } from 'rxjs';
-
+import { Store } from '@app/store/store';
 @Component({ templateUrl: 'home.component.html' })
 export class HomeComponent implements OnInit, OnDestroy {
   public tasks;
@@ -17,8 +17,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   public username = '';
   public $vm = this.facade.$vm;
   private $destroy = new Subject();
-
-  constructor(private userService: UserService, private facade: TaskFacade) {}
+  public showProjectPopUp = false;
+  public showPopUp = false;
+  constructor(
+    private userService: UserService,
+    private facade: TaskFacade,
+    private store: Store
+  ) {}
 
   ngOnInit() {
     this.loading = true;
@@ -30,19 +35,15 @@ export class HomeComponent implements OnInit, OnDestroy {
       .pipe(skip(2), distinctUntilChanged(), takeUntil(this.$destroy))
       .subscribe({
         next: data => {
-          console.log(data.listOfUsers);
-          this.tasks = data.tasks;
-          this.projects = data.projects;
-          this.users = data.listOfUsers;
-          this.tableColumns = data.tableColumns;
-          this.tasksStatus = data.tasksStatus;
+          this.showPopUp = data.showPopUp;
         }
       });
 
-    this.getTasks(currentUser.username);
+    this.getTasks(currentUser);
     if (authorisation === 'ROLE_ADMIN') {
-      console.log('authorisation', authorisation);
       this.facade.getProjects();
+      this.facade.getUsers();
+    } else {
       this.facade.getUsers();
     }
     this.username = currentUser.username;
@@ -68,5 +69,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.$destroy.next();
     this.$destroy.complete();
+  }
+  createProjectTaskPopUp() {
+    this.store.set('showPopUp', true);
   }
 }

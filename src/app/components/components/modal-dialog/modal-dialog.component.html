@@ -7,7 +7,7 @@
         }}</span>
         <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
         <div class="custom-modal--header-close" (click)="closeModal()">
-            <span class="fas fa-times"></span>
+          <span class="fas fa-times"></span>
         </div>
       </div>
       <div
@@ -18,7 +18,7 @@
         <ng-content *ngIf="visible"></ng-content>
       </div>
       <div class="form-note-template" *ngIf="noteTemplate">
-          <ng-content select="note-template"></ng-content>
+        <ng-content select="note-template"></ng-content>
       </div>
       <div
         [ngClass]="
