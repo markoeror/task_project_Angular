@@ -3,7 +3,7 @@ import { distinctUntilChanged, pluck } from 'rxjs/operators';
 import { AppState } from './state';
 import { Injectable } from '@angular/core';
 @Injectable({ providedIn: 'root' })
-export class EmployeeMappingStore {
+export class Store {
   public defaultState = new AppState();
   private subject = new BehaviorSubject(this.defaultState);
   private store = this.subject.asObservable().pipe(distinctUntilChanged());
