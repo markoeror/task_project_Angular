@@ -12,8 +12,6 @@ export class TaskService {
   public currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
   setTask(data: any) {
-    console.log('');
-
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     const authorisation = currentUser.authorities[0].authority;
     let address = '';
@@ -22,9 +20,6 @@ export class TaskService {
     } else {
       address = `${environment.apiUrl}/api/user/updateTaskUser`;
     }
-    console.log('data', data);
-    console.log('adress', address);
-
     return this.http.post(address, data).pipe(map(jsonData => jsonData));
   }
 
@@ -45,8 +40,6 @@ export class TaskService {
   }
 
   createProject(data) {
-    console.log('createProject0', data);
-
     const project = {
       projectName: data
     };
@@ -55,8 +48,6 @@ export class TaskService {
   }
 
   getTasks(user) {
-    console.log('user', user);
-
     this.store.set('isLoading', true);
     const body = { username: user.username };
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));

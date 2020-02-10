@@ -3,7 +3,7 @@ import { of, Observable, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TaskService } from '@app/_services/task.service';
 import { Store } from '@app/store/store';
-
+import * as moment from 'moment';
 @Injectable({ providedIn: 'root' })
 export class TaskFacade {
   public $vm: Observable<any> = combineLatest(
@@ -37,13 +37,25 @@ export class TaskFacade {
 
   constructor(private taskService: TaskService, private store: Store) {}
 
-  createTaskAddToProject(task, project) {
-    this.taskService.createTask(task, project);
+  createTaskAddToProject(taskForm) {
+    const project = taskForm.value.project.id;
+    const task = {
+      shortname: taskForm.value.shortname,
+      description: taskForm.value.description,
+      deadline: moment(taskForm.value.deadline).format('DD-MM-YYYY')
+    };
+
+    this.taskService.createTask(task, project).subscribe({
+      next: dataFromApi => {
+        this.store.set('tasks', dataFromApi);
+        this.store.set('isLoading', false);
+      },
+      error: () => this.store.set('isLoading', false)
+    });
   }
   deleteTasks(user) {
     this.taskService.deleteTask(user).subscribe({
       next: dataFromApi => {
-        console.log('deleteTasks dataFromApi', dataFromApi);
         this.store.set('tasks', dataFromApi);
         this.store.set('isLoading', false);
       },
@@ -53,7 +65,6 @@ export class TaskFacade {
   getTasks(user) {
     this.taskService.getTasks(user).subscribe({
       next: dataFromApi => {
-        console.log('dataFromApi', dataFromApi);
         this.store.set('tasks', dataFromApi);
         this.store.set('isLoading', false);
       },
@@ -64,7 +75,6 @@ export class TaskFacade {
   setTask(data: any) {
     this.taskService.setTask(data).subscribe({
       next: dataFromApi => {
-        console.log('setTask dataFromApi', dataFromApi);
         this.store.set('tasks', dataFromApi);
         this.store.set('isLoading', false);
       },
@@ -75,7 +85,6 @@ export class TaskFacade {
   getProjects() {
     this.taskService.getProjects().subscribe({
       next: dataFromApi => {
-        console.log('dataFromApi', dataFromApi);
         this.store.set('projects', dataFromApi);
         this.store.set('isLoading', false);
       },
@@ -86,7 +95,6 @@ export class TaskFacade {
   createProject(data: any) {
     this.taskService.createProject(data).subscribe({
       next: dataFromApi => {
-        console.log('getUsersdataFromApi', dataFromApi);
         this.store.set('projects', dataFromApi);
         this.store.set('isLoading', false);
       },
@@ -96,7 +104,6 @@ export class TaskFacade {
   getUsers() {
     this.taskService.getUsers().subscribe({
       next: dataFromApi => {
-        console.log('getUsersdataFromApi', dataFromApi);
         this.store.set('listOfUsers', dataFromApi);
         this.store.set('isLoading', false);
       },

@@ -38,8 +38,6 @@ export class TableComponent implements OnInit, OnDestroy {
               value: user.username
             });
           });
-          console.log('data.projects', data.projects);
-
           data.projects.map(project => {
             this.projects.push({
               label: project.projectName,

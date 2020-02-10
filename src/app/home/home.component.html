@@ -19,7 +19,11 @@
   </div>
 </div>
 
-<app-modal-dialog [visible]="showPopUp" [width]="'40%'">
+<app-modal-dialog
+  [visible]="showPopUp"
+  [width]="'40%'"
+  (saveButtonAction)="createTask($event)"
+>
   <div class="ui-g ui-fluid">
     <div
       class=""

@@ -45,7 +45,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         next: data => {
           this.projects = data.projects;
           this.showPopUp = data.showPopUp;
-          console.log('this.projects', this.projects);
         }
       });
 
@@ -78,8 +77,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.facade.getTasks(user);
   }
 
-  setTask(data) {
-    this.facade.setTask(data);
+  createTask(event) {
+    this.facade.createTaskAddToProject(this.taskForm);
   }
 
   deleteTask(data) {
