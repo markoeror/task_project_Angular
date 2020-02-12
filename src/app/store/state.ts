@@ -40,8 +40,8 @@ export class AppState implements State {
       value: 'IN_PROGRESS'
     },
     {
-      label: 'FINISHED',
-      value: 'Finished'
+      label: 'Finished',
+      value: 'FINISHED'
     }
   ];
   tableColumns = [
