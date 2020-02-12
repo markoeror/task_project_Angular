@@ -1,14 +1,17 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { TaskFacade } from '@app/facedes/task.facade';
-import { skip, distinctUntilChanged, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import {Component, OnInit, Input, OnDestroy} from '@angular/core';
+import {TaskFacade} from '@app/facedes/task.facade';
+import {skip, distinctUntilChanged, takeUntil} from 'rxjs/operators';
+import {Subject} from 'rxjs';
+
 @Component({
   selector: 'app-table',
   templateUrl: 'table.component.html',
   styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnInit, OnDestroy {
-  constructor(private facade: TaskFacade) {}
+  constructor(private facade: TaskFacade) {
+  }
+
   private $destroy = new Subject();
   public columns;
   public rolePermissionAdmin;
@@ -18,6 +21,7 @@ export class TableComponent implements OnInit, OnDestroy {
   public projects;
   public tasks;
   public $vm = this.facade.$vm;
+
   ngOnInit() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     const authorisation = currentUser.authorities[0].authority;
@@ -48,16 +52,27 @@ export class TableComponent implements OnInit, OnDestroy {
       });
   }
 
+  isAdmin(data) {
+    return data.userId === 1;
+  }
+
   onRowEditSave(rowData) {
     this.facade.setTask(rowData);
   }
-  onRowEditInit(rowData) {}
-  onRowEditCancel(rowData, ri) {}
-  setTask(data: any) {}
+
+  onRowEditInit(rowData) {
+  }
+
+  onRowEditCancel(rowData, ri) {
+  }
+
+  setTask(data: any) {
+  }
 
   deleteTask(data) {
     this.facade.deleteTasks(data);
   }
+
   ngOnDestroy() {
     this.$destroy.next();
     this.$destroy.complete();

@@ -6,8 +6,9 @@ import {
   OnDestroy,
   OnInit
 } from '@angular/core';
-import { trigger, transition, animate, style } from '@angular/animations';
-import { Store } from '@app/store/store';
+import {trigger, transition, animate, style} from '@angular/animations';
+import {Store} from '@app/store/store';
+
 @Component({
   selector: 'app-modal-dialog',
   templateUrl: './modal-dialog.component.html',
@@ -15,11 +16,12 @@ import { Store } from '@app/store/store';
   animations: [
     trigger('slideInOut', [
       transition(':enter', [
-        style({ transform: 'translateY(-100%)' }),
-        animate('300ms ease-in', style({ transform: 'translateY(5%)' }))
+        style({transform: 'translateY(-100%)'}),
+
+        animate('300ms ease-in', style({transform: 'translateY(5%)'}))
       ]),
       transition(':leave', [
-        animate('300ms ease-in', style({ transform: 'translateY(-100%)' }))
+        animate('300ms ease-in', style({transform: 'translateY(-100%)'}))
       ])
     ])
   ]
@@ -42,9 +44,11 @@ export class ModalDialogComponent implements OnDestroy, OnInit {
   @Input() width = '70%';
   @Input() height = '565px';
 
-  constructor(private store: Store) {}
+  constructor(private store: Store) {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   closeModal(): void {
     this.visible = false;
@@ -52,7 +56,7 @@ export class ModalDialogComponent implements OnDestroy, OnInit {
   }
 
   onSaveButtonAction(): void {
-    this.saveButtonAction.emit({ buttonLabel: this.labelSave, save: true });
+    this.saveButtonAction.emit({buttonLabel: this.labelSave, save: true});
   }
 
   onCloseButtonAction(): void {
@@ -63,5 +67,6 @@ export class ModalDialogComponent implements OnDestroy, OnInit {
     this.store.set('showPopUp', false);
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+  }
 }

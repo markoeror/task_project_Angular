@@ -151,6 +151,7 @@
               pInitEditableRow
               icon="pi pi-pencil"
               class="ui-button-info"
+              [disabled]= "isAdmin(rowData)"
               (click)="onRowEditInit(rowData)"
             ></button>
             <button
