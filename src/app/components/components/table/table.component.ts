@@ -9,10 +9,6 @@ import {Subject} from 'rxjs';
   styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnInit, OnDestroy {
-  constructor(private facade: TaskFacade) {
-  }
-
-  private $destroy = new Subject();
   public columns;
   public rolePermissionAdmin;
   public listOfUsers;
@@ -21,11 +17,15 @@ export class TableComponent implements OnInit, OnDestroy {
   public projects;
   public tasks;
   public $vm = this.facade.$vm;
+  private $destroy = new Subject();
+
+  constructor(private facade: TaskFacade) {
+  }
 
   ngOnInit() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     const authorisation = currentUser.authorities[0].authority;
-    this.rolePermissionAdmin = authorisation === 'ROLE_ADMIN' ? true : false;
+    this.rolePermissionAdmin = authorisation === 'ROLE_ADMIN';
     this.$vm
       .pipe(skip(2), distinctUntilChanged(), takeUntil(this.$destroy))
       .subscribe({
@@ -48,12 +48,21 @@ export class TableComponent implements OnInit, OnDestroy {
               value: project.projectName
             });
           });
+        }, error(e) {
+          console.log('error: ', e);
         }
       });
   }
 
   isAdmin(data) {
-    return data.userId === 1;
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const authorisation = currentUser.authorities[0].authority;
+    if (authorisation === 'ROLE_ADMIN') {
+      return false;
+    } else {
+      return data.userId === 1;
+    }
+
   }
 
   onRowEditSave(rowData) {
